@@ -1,5 +1,6 @@
 package at.utils;
 
+import at.ConfVar;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -12,22 +13,24 @@ import java.net.ServerSocket;
 @Log4j
 public class AppiumServerJava {
 
+    ConfVar confVar = ConfVar.getInstance();
+
     private static AppiumDriverLocalService service;
     private static AppiumServiceBuilder builder;
     private static DesiredCapabilities cap;
 
     public void startServer() {
         //Set Capabilities
-//        cap = new DesiredCapabilities();
-//        cap.setCapability("noReset", "false");
-//
-//        //Build the Appium service
-//        builder = new AppiumServiceBuilder();
-//        builder.withIPAddress("127.0.0.1");
-//        builder.usingPort(4723);
-//        builder.withCapabilities(cap);
-//        builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
-//        builder.withArgument(GeneralServerFlag.LOG_LEVEL,"error");
+        cap = new DesiredCapabilities();
+        cap.setCapability("noReset", "false");
+
+        //Build the Appium service
+        builder = new AppiumServiceBuilder();
+        builder.withIPAddress(confVar.appiumIP);
+        builder.usingPort(confVar.appiumPort);
+        builder.withCapabilities(cap);
+        builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
+        builder.withArgument(GeneralServerFlag.LOG_LEVEL,"error");
 
         //Start the server with the builder
         try {
@@ -62,20 +65,6 @@ public class AppiumServerJava {
         }
         return isServerRunning;
     }
-
-
-    public static void main(String[] args) {
-        AppiumServerJava appiumServer = new AppiumServerJava();
-
-        int port = 4723;
-        if(appiumServer.checkIfServerIsRunnning(port)) {
-            appiumServer.startServer();
-            appiumServer.stopServer();
-        } else {
-            System.out.println("Appium Server already running on Port - " + port);
-        }
-    }
-
 }
 
 

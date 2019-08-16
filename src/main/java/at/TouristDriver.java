@@ -5,18 +5,21 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import java.io.File;
 
 public class TouristDriver implements WebDriverProvider {
 
     public WebDriver createDriver(DesiredCapabilities desiredCapabilities) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+//        File file = new File("src/main/resources/tourist.apk");
+
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.0");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554");
         capabilities.setCapability("autoGrantPermissions", true);
+//        capabilities.setCapability("app", file.getAbsolutePath());
         capabilities.setCapability("appPackage", "ua.privatbank.tourist");
         capabilities.setCapability("appActivity", "ua.privatbank.tourist.ui.authorization.Authorization");
         capabilities.setCapability("language", "ru");
@@ -26,8 +29,8 @@ public class TouristDriver implements WebDriverProvider {
 
 
         try {
-            return new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        } catch (MalformedURLException e) {
+            return new AndroidDriver(capabilities);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }}
