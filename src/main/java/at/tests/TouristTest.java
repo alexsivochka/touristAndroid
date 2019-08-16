@@ -21,16 +21,9 @@ public class TouristTest  extends BaseTest {
     @Test
     public void testMethod() {
         startPage = new TouristStartPage();
-        $(By.id("places_toolbar")).shouldBe(Condition.enabled).click();
-        $(By.id("meta_string_input")).shouldBe(Condition.enabled).click();
-        $(By.id("meta_string_input")).sendKeys("кафе");
-        sleep(5000);
-        $(By.xpath("//*[contains(@text,'Показать')]")).shouldBe(Condition.visible).click();
-        sleep(3000);
-
-//        startPage.enterWithPhone("+380112223344");
-//        startPage.enterByClickingSkipButton();
-//        Selenide.sleep(10000);
+        startPage.goToAutorizationPage();
+        startPage.enterByClickingSkipButton();
+        Selenide.sleep(10000);
     }
 
 

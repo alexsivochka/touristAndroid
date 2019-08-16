@@ -34,7 +34,7 @@ public class Emulator {
 
     @Step("Закрытие эмулятора")
     public void close() {
-        String command= "adb -s emulator-5554 emu kill";
+        String command= "adb emu kill";
         executeCommand(command);
     }
 
